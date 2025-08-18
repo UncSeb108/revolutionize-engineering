@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBars, FaTimes } from "react-icons/fa";
 
 /**
  * A Navbar component for the "Revolutionize Engineering" landing page.
@@ -10,7 +9,8 @@ import { FaBars, FaTimes } from "react-icons/fa";
  * menu, and dynamic animations using Framer Motion. The styling now uses a
  * solid black background at all times, with a blur effect appearing on scroll,
  * and a sans-serif font. The mobile menu also covers the full screen and
- * includes a prominent close icon.
+ * includes a prominent close icon. The "Post a Project" CTA has been replaced
+ * with a "Log In" button linking to the authentication page.
  */
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -78,6 +78,32 @@ const Navbar = () => {
     },
   };
 
+  // Inline SVG for the hamburger menu icon
+  const BarsIcon = ({ size = 24 }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path>
+    </svg>
+  );
+
+  // Inline SVG for the times/close icon
+  const TimesIcon = ({ size = 24 }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="m16.192 6.31-4.243 4.242-4.242-4.242-1.414 1.414 4.242 4.243-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414-4.242-4.242 4.242-4.243z"></path>
+    </svg>
+  );
+
   return (
     <motion.nav
       className={`fixed top-0 left-0 w-full z-50 px-4 py-4 font-sans text-white bg-[#0A0A0A] bg-opacity-90 shadow-lg transition-all duration-500
@@ -88,7 +114,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Platform Name / Logo */}
-        <a href="#" className="flex items-center gap-3">
+        <a href="/" className="flex items-center gap-3">
           <img
             src="/images/logo.png" // Logo image source
             alt="Revolutionize Engineering Logo"
@@ -99,7 +125,7 @@ const Navbar = () => {
           </span>
         </a>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links and CTA */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link, index) => (
             <motion.a
@@ -114,19 +140,19 @@ const Navbar = () => {
           ))}
           {/* Desktop CTA Button */}
           <motion.a
-            href="#"
+            href="/auth"
             className="bg-[#00FFFF] text-neutral-900 font-bold py-2 px-6 rounded-full transition-colors duration-300 hover:bg-white"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Post a Project
+            Log In
           </motion.a>
         </div>
 
         {/* Mobile Hamburger Menu Icon */}
         <div className="md:hidden">
           <button onClick={toggleMenu} aria-label="Toggle navigation menu">
-            {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            {isMenuOpen ? <TimesIcon size={24} /> : <BarsIcon size={24} />}
           </button>
         </div>
       </div>
@@ -147,7 +173,7 @@ const Navbar = () => {
               className="absolute top-6 right-6 text-white"
               aria-label="Close navigation menu"
             >
-              <FaTimes size={30} />
+              <TimesIcon size={30} />
             </button>
 
             {navLinks.map((link, index) => (
@@ -162,11 +188,11 @@ const Navbar = () => {
             ))}
             {/* Mobile CTA Button */}
             <a
-              href="#"
+              href="/auth"
               className="bg-[#00FFFF] text-neutral-900 font-bold py-3 px-8 mt-4 rounded-full text-xl"
               onClick={toggleMenu}
             >
-              Post a Project
+              Log In
             </a>
           </motion.div>
         )}
